@@ -96,7 +96,7 @@ class EditorChoiceSchoolDataTable extends DataTable
         // return $model->newQuery()->where('editor_choice', true);
         return $model->newQuery()
             ->selectRaw('schools.*, users.name AS creator_name, CONCAT(cities.name, ", ", provinces.name) AS city_name')
-            ->join('users', 'users.id', '=', 'schools.created_by')
+            ->leftjoin('users', 'users.id', '=', 'schools.created_by')
             ->join('cities', 'cities.id', '=', 'schools.city_id')
             ->join('provinces', 'provinces.id', '=', 'cities.province_id')
             ->where('editor_choice', true);

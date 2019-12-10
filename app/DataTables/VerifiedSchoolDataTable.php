@@ -79,7 +79,7 @@ class VerifiedSchoolDataTable extends DataTable
         // return $model->newQuery()
         return $model->newQuery()
             ->selectRaw('schools.*, users.name AS creator_name, CONCAT(cities.name, ", ", provinces.name) AS city_name')
-            ->join('users', 'users.id', '=', 'schools.created_by')
+            ->leftjoin('users', 'users.id', '=', 'schools.created_by')
             ->join('cities', 'cities.id', '=', 'schools.city_id')
             ->join('provinces', 'provinces.id', '=', 'cities.province_id')
             ->whereNotNull('verified_at');
