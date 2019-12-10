@@ -76,7 +76,7 @@ class UnverifiedSchoolDataTable extends DataTable
             ->join('levels', 'levels.id', '=', 'schools.level_id')
             ->join('cities', 'cities.id', '=', 'schools.city_id')
             ->join('provinces', 'provinces.id', '=', 'cities.province_id')
-            ->whereNull('verified_at');
+            ->whereNull('schools.verified_at');
     }
 
     /**
