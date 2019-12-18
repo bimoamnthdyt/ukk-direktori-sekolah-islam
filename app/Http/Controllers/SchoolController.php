@@ -103,6 +103,9 @@ class SchoolController extends AppBaseController
             $schoolFacility->save();
         }
 
+        $school->biaya_pendaftaran = str_replace(',', '', $school->biaya_pendaftaran);
+        $school->biaya_spp = str_replace(',', '', $school->biaya_spp);
+
         $school->slug_sekolah = Str::slug($school->nama_sekolah, '-');
 
         $school->save();
@@ -197,8 +200,10 @@ class SchoolController extends AppBaseController
             $schoolFacility->save();
         }
 
+        $school->biaya_pendaftaran = str_replace(',', '', $school->biaya_pendaftaran);
+        $school->biaya_spp = str_replace(',', '', $school->biaya_spp);
         $school->slug_sekolah = Str::slug($school->nama_sekolah, '-');
-
+        
         $school->save();
 
         Flash::success('School updated successfully.');
