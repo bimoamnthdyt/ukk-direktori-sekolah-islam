@@ -43,8 +43,8 @@ class SchoolDataTable extends DataTable
                     return "<span class=\"badge badge-danger\">Unverified</span>";
                 }
             })
-            ->addColumn('creator_name', function($school){
-                return !empty($school->creator)?$school->creator->name:'';
+            ->addColumn('assignee_name', function($school){
+                return !empty($school->pic)?$school->pic->name:'';
             })
             ->filterColumn('level_name', function($query, $keyword) {
                 $query->whereHas('level', function ($query) use ($keyword) {
@@ -58,7 +58,7 @@ class SchoolDataTable extends DataTable
             })
             ->rawColumns(['action', 'status_name', 'facility'])
             ->orderColumn('status_name', 'status $1')
-            ->orderColumn('creator_name', 'creator_name $1')
+            ->orderColumn('assignee_name', 'assignee_name $1')
             ->orderColumn('city_name', 'city_name $1');
     }
 
@@ -71,8 +71,8 @@ class SchoolDataTable extends DataTable
     public function query(School $model)
     {
         return $model->newQuery()
-            ->selectRaw('schools.*, users.name AS creator_name, CONCAT(cities.name, ", ", provinces.name) AS city_name')
-            ->join('users', 'users.id', '=', 'schools.created_by')
+            ->selectRaw('schools.*, users.name AS assignee_name, CONCAT(cities.name, ", ", provinces.name) AS city_name')
+            ->leftjoin('users', 'users.id', '=', 'schools.assignee')
             ->join('cities', 'cities.id', '=', 'schools.city_id')
             ->join('provinces', 'provinces.id', '=', 'cities.province_id');
     }
@@ -119,7 +119,7 @@ class SchoolDataTable extends DataTable
             'nama_sekolah' => ['searchable' => true, 'title' => 'Name', 'orderable' => true],
             'city_name' => ['searchable' => true, 'title' => 'City', 'class' => 'text-center', 'orderable' => true],
             'status_name' => ['searchable' => false, 'title' => 'Status', 'class' => 'text-center', 'orderable' => true],
-            'creator_name' => ['searchable' => true, 'title' => 'Created By','class' => 'text-center', 'orderable' => true]
+            'assignee_name' => ['searchable' => true, 'title' => 'PIC','class' => 'text-center', 'orderable' => true]
         ];
     }
 

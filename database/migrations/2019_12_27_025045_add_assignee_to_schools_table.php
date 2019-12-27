@@ -16,6 +16,7 @@ class AddAssigneeToSchoolsTable extends Migration
         Schema::table('schools', function (Blueprint $table) {
             //
             $table->bigInteger('assignee')->after('deleted_by')->default(0)->nullable(false);
+            $table->index('assignee');
         });
     }
 
@@ -28,7 +29,9 @@ class AddAssigneeToSchoolsTable extends Migration
     {
         Schema::table('schools', function (Blueprint $table) {
             //
+            $table->dropIndex('assignee');
             $table->dropColumn('assignee');
+
         });
     }
 }

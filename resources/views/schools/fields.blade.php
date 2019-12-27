@@ -330,7 +330,30 @@
             </div>
         </div>
     </div>
+</div>
+@if(\App\Models\Role::isAdmin())
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">Assignee</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">            
+            <div class="form-group form-group-sm col-sm-6">
+                <div class="row">
+                    {!! Form::label('assignee', 'Assignee', ['class' => 'col-sm-3 col-form-label']) !!}
+                    <div class="col-sm-9">
+                    {!! Form::select('assignee', $users, null, ['class' => 'form-control']) !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@else
+{!! Form::hidden('assignee', Auth::user()->id, ['class' => 'form-control', 'id' => 'assignee']) !!}
+@endif
 
+<div class="card card-primary">
     <div class="card-footer">
         <div class="row">
             <!-- Submit Field -->

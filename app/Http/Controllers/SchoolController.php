@@ -62,7 +62,8 @@ class SchoolController extends AppBaseController
     {
         $levels = $this->dropDownWithoutNone(\App\Models\Level::orderBy('sequence')->get(), 'name', 'id');
         $facilities = \App\Models\Facility::all();
-        return view('schools.create', compact('levels', 'facilities'));
+        $users =$this->dropDownWithoutNone(\App\Models\User::all(), 'name', 'id');
+        return view('schools.create', compact('levels', 'facilities', 'users'));
     }
 
     /**
@@ -75,7 +76,7 @@ class SchoolController extends AppBaseController
     public function store(CreateSchoolRequest $request)
     {
         $input = $request->all();
-
+        
         $school = $this->schoolRepository->create($input);
 
         //$logo_url = Storage::disk('s3')->url($input['logo']);
@@ -145,7 +146,7 @@ class SchoolController extends AppBaseController
     public function edit($id)
     {
         $school = $this->schoolRepository->find($id);
-
+        
         if (empty($school)) {
             Flash::error('School not found');
 
@@ -154,8 +155,9 @@ class SchoolController extends AppBaseController
 
         $levels = $this->dropDownWithoutNone(\App\Models\Level::orderBy('sequence')->get(), 'name', 'id');
         $facilities = \App\Models\Facility::all();
+        $users =$this->dropDownWithoutNone(\App\Models\User::all(), 'name', 'id');
 
-        return view('schools.edit', compact('levels', 'facilities'))->with('school', $school);
+        return view('schools.edit', compact('levels', 'facilities', 'users'))->with('school', $school);
     }
 
     /**
@@ -228,9 +230,18 @@ class SchoolController extends AppBaseController
             return redirect(route('schools.index'));
         }
 
-        $this->schoolRepository->delete($id);
+        if(\App\Models\Role::isAdmin() || 
+            (\App\Models\Role::isContributor() && 
+                ($school->created_by == auth()->user()->id || $school->assignee == auth()->user()->id)
+            )
+        ) { 
+            $this->schoolRepository->delete($id);
+            Flash::success('School deleted successfully.');
+        } else {
+            Flash::error('No permission!');
+        }
 
-        Flash::success('School deleted successfully.');
+        
 
         return redirect(route('schools.index'));
     }

@@ -371,6 +371,16 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Assignee At Field -->
+                <div class="form-group col-sm-6">
+                    <div class="row">
+                        {!! Form::label('assignee', 'Assignee', ['class' => 'col-sm-3 col-form-label']) !!}
+                        <div class="col-sm-9">
+                            {!! Form::text('campaign_id', !empty($school->pic)?$school->pic->name:'-', ['class' => 'form-control', 'readonly']) !!}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card-footer">

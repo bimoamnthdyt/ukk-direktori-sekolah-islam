@@ -104,7 +104,8 @@ class School extends Model implements HasMedia
         'short_description',
         'description',
         'editor_choice',
-        'status'
+        'status',
+        'assignee'
     ];
 
     /**
@@ -161,7 +162,8 @@ class School extends Model implements HasMedia
         'status' => 'string',
         'created_by' => 'integer',
         'updated_by' => 'integer',
-        'deleted_by' => 'integer'
+        'deleted_by' => 'integer',
+        'assignee' => 'integer'
     ];
 
     /**
@@ -457,8 +459,8 @@ class School extends Model implements HasMedia
         $userId = auth()->user()->id;
         $creatorId = 0;
 
-        if(!empty($this->creator)) {
-            $creatorId = $this->creator->id;
+        if(!empty($this->pic)) {
+            $creatorId = $this->pic->id;
         }
 
         if($userId == $creatorId) {
@@ -477,5 +479,10 @@ class School extends Model implements HasMedia
         parent::boot();
 
         static::addGlobalScope(new ContributorScope);
+    }
+
+    public function pic()
+    {
+        return $this->belongsTo(User::class, 'assignee', 'id');
     }
 }
