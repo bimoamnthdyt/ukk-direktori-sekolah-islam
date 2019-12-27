@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Scopes\ContributorScope;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
@@ -469,5 +470,12 @@ class School extends Model implements HasMedia
 
     public function isLocationExists() {
         return !empty($this->lat) && !empty($this->lng);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new ContributorScope);
     }
 }
