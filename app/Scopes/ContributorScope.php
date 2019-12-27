@@ -19,7 +19,7 @@ class ContributorScope implements Scope
     {
         
         if(auth()->check() && auth()->user()->role == 'Contributor' && \App\Helpers\AppHelper::isAdminPage()) {
-            $builder->where('schools.created_by', auth()->user()->id);
+            $builder->where('schools.assignee', auth()->user()->id);
         }
         
     }
