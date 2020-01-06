@@ -34,10 +34,11 @@ class DashboardController extends Controller
             ->orderBy('total', 'desc')
             ->take(15)
             ->get();
-
+        
         $schools = \App\Models\School::orderBy('created_at', 'desc')
             ->take(10)
-            ->get();
+            ->get();    
+            
         return view('dashboard.index', compact('schools', 'all_schools', 'most_cities', 'verified_schools', 'unverified_schools', 'published_schools'));
     }
 }

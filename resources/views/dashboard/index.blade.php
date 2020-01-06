@@ -104,6 +104,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                
                                     @foreach($schools as $k=>$school)
                                     <tr>
                                         <td>{{ $k+1 }}</td>
@@ -116,14 +117,8 @@
                                         <td>
                                             <div class="btn-group">
                                                 <a href="{{ route('schools.show', ['id'=>$school->id]) }}" title="View school" class="btn btn-sm btn-danger"><i class="fas fa-eye"></i></a>
-                                                @if($school->isVerified())
-                                                @if(\App\Models\Role::isAdmin())
-                                                <a href="{{ route('schools.edit', ['id'=>$school->id]) }}" title="Edit school" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                                                @endif
-                                                @else
                                                 @if(\App\Models\Role::isAdmin() || $school->isMySchool())
                                                 <a href="{{ route('schools.edit', ['id'=>$school->id]) }}" title="Edit school" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
-                                                @endif
                                                 @endif
                                             </div>
                                         </td>
