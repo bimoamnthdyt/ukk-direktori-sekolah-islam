@@ -29,7 +29,7 @@
         ]) !!}
         @endif
     @elseif(Request::is('admin/verified_schools*'))
-        @if(\App\Models\Role::isAdmin())
+        @if(\App\Models\Role::isAdmin() || $school->isMySchool())
         <a href="{{ route('schools.edit', $id) }}" class='btn btn-default btn-xs'>
             <i class="fa fa-edit"></i>
         </a>
