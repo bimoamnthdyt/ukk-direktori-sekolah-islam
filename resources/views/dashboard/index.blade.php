@@ -14,7 +14,9 @@
             <h1 class="m-0 text-dark">Dashboard</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
-
+            <h1 class="float-sm-right">
+                <a class="btn btn-primary btn-sm pull-right" style="margin-top: -10px;margin-bottom: 5px" href="{!! route('schools.create') !!}">Add New</a>
+            </h1>    
         </div><!-- /.col -->
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->

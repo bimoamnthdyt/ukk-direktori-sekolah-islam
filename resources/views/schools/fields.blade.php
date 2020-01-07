@@ -17,7 +17,12 @@
 
 {!! Form::text('hidden', null, ['autocomplete' => "autocomplete_off_hack_xfr4!k", 'style'=> 'display:none;']) !!}
 {!! Form::hidden('city_id', !empty($school)?$school->city_id:null, ['class' => 'form-control', 'id' => 'city_id']) !!}
+
+@if($pageType == 'edit' && \App\Models\Role::isContributor())
 {!! Form::hidden('status', 'Unpublished', ['class' => 'form-control']) !!}
+@elseif($pageType == 'create')
+{!! Form::hidden('status', 'Unpublished', ['class' => 'form-control']) !!}
+@endif
 
 <div class="card card-primary">
     <div class="card-header">

@@ -18,7 +18,7 @@ class ContributorScope implements Scope
     public function apply(Builder $builder, Model $model)
     {
         
-        if(auth()->check() && auth()->user()->role == 'Contributor' && \App\Helpers\AppHelper::isAdminPage()) {
+        if(auth()->check() && \App\Models\Role::isContributor() && \App\Helpers\AppHelper::isAdminPage()) {
             $builder->where('schools.assignee', auth()->user()->id);
         }
         

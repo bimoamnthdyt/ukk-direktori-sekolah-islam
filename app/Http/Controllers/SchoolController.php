@@ -109,6 +109,10 @@ class SchoolController extends AppBaseController
 
         $school->slug_sekolah = Str::slug($school->nama_sekolah, '-');
 
+        if(\App\Models\Role::isAdmin()) {
+            $school->verified_at = date('Y-m-d H:i:s');
+        }
+        
         $school->save();
 
         Flash::success('School saved successfully.');
@@ -255,7 +259,7 @@ class SchoolController extends AppBaseController
 
             return redirect(route('schools.unverified'));
         }
-
+        
         $school->verified_at = date('Y-m-d H:i:s');
         $school->save();
 

@@ -14,7 +14,7 @@
         <div class="container-fluid">
             @include('adminlte-templates::common.errors')
             {!! Form::open(['route' => 'schools.store', 'class' => 'form-horizontal dropzone', 'files' => true, 'autocomplete' => "autocomplete_off_hack_xfr4!k", 'id' => 'myForm']) !!}
-            @include('schools.fields')
+            @include('schools.fields', ['pageType' => 'create'])
 
             {!! Form::close() !!}
         </div>
