@@ -88,11 +88,11 @@ class SchoolController extends AppBaseController
         }
 
         foreach ($request->input('brochures', []) as $k=>$brochure) {
-            $school->{"brochure".($k+1)} = $brochure;
+            if($k < 8) $school->{"brochure".($k+1)} = $brochure;
         }
 
         foreach ($request->input('photos', []) as $k=>$photo) {
-            $school->{"photo".($k+1)} = $photo;
+            if($k < 8) $school->{"photo".($k+1)} = $photo;
         }
 
         \App\Models\SchoolFacility::where('school_id', $school->id)->delete();
@@ -190,11 +190,11 @@ class SchoolController extends AppBaseController
         }
 
         foreach ($request->input('brochures', []) as $k=>$brochure) {
-            $school->{"brochure".($k+1)} = $brochure;
+            if($k < 8) $school->{"brochure".($k+1)} = $brochure;
         }
 
         foreach ($request->input('photos', []) as $k=>$photo) {
-            $school->{"photo".($k+1)} = $photo;
+            if($k < 8) $school->{"photo".($k+1)} = $photo;
         }
 
         \App\Models\SchoolFacility::where('school_id', $school->id)->delete();

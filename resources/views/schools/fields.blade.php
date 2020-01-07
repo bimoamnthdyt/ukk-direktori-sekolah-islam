@@ -308,7 +308,7 @@
                         {!! Form::label('logo', 'Logo', ['class' => 'col-sm-3']) !!}
                         <div class="col-sm-12 boxzone" id="logo">
                             <div class="dz-message needsclick">
-                                Drop files here or click to upload.<br>
+                                Drop logo file (max 1 file) here or click to upload.<br>
 
                             </div>
                         </div>
@@ -317,7 +317,7 @@
                         {!! Form::label('brochure', 'Brochure', ['class' => 'col-sm-3 ']) !!}
                         <div class="col-sm-12 boxzone" id="brochure">
                             <div class="dz-message needsclick">
-                                Drop files here or click to upload.<br>
+                                Drop files here (max 8 files) or click to upload.<br>
                                 <!--<span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>-->
                             </div>
                         </div>
@@ -328,7 +328,7 @@
                 {!! Form::label('photo', 'Photos', ['class' => 'col-sm-3 ']) !!}
                 <div class="col-sm-12 boxzone" id="photo">
                     <div class="dz-message needsclick">
-                        Drop files here or click to upload.<br>
+                        Drop files here (max 8 files) or click to upload.<br>
                         <!--<span class="note needsclick">(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</span>-->
                     </div>
                 </div>
@@ -485,6 +485,12 @@
                     $('#myForm').find('input[name="brochures[]"][value="' + name + '"]').remove()
                 },
                 init: function () {
+                    this.on("addedfile", function(event) {
+                        while (this.files.length > this.options.maxFiles) {
+                            alert('Maximum files allowed are 8 files. The system will automatically remove the first file.')
+                            this.removeFile(file);
+                        }
+                    });
                     @php
                         $files = [];
                         $urls = [];
@@ -540,6 +546,12 @@
                     $('#myForm').find('input[name="photos[]"][value="' + name + '"]').remove()
                 },
                 init: function () {
+                    this.on("addedfile", function(file) {
+                        while (this.files.length > this.options.maxFiles) {
+                            alert('Maximum files allowed are 8 files. The system will automatically remove the first file.')
+                            this.removeFile(file);
+                        }
+                    });
                     @php
                         $files = [];
                         $urls = [];
