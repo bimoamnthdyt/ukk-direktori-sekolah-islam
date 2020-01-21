@@ -92,7 +92,7 @@ class UserController extends AppBaseController
         if(!\App\Models\Role::isAdmin()) {
             return redirect(route('dashboard.index'));
         }
-        
+
         if(!empty($user)) {
             $user->role = $input['role'];
             $user->save();
@@ -334,6 +334,12 @@ class UserController extends AppBaseController
 
         echo "Success:". $count;
     }
+
+    /**
+     * Show the form for editing the specified User.
+     *
+     * @return Response
+     */
 
     public function edit_profile() {
         $user = $this->userRepository->findWithoutFail(auth()->user()->id);
