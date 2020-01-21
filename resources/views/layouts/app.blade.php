@@ -65,7 +65,8 @@
             /*vertical-align: inherit!important;*/
         }
 
-        input[type="text"], input[type="email"],input[type="number"],input[type="date"], input[type="password"], textarea
+        input[type="text"], input[type="email"],input[type="number"],input[type="date"], input[type="password"], textarea,
+        input[type="tel"]
              {
             background: transparent;
             border: none;
@@ -73,6 +74,10 @@
             -webkit-box-shadow: none;
             box-shadow: none;
             border-radius: 0;
+        }
+
+        .input-group-append, .input-group-prepend {
+            display: block;
         }
 
         textarea.form-control {
@@ -210,15 +215,27 @@
           <a href="#" class="nav-link">Contact</a>
         </li>-->
       </ul>
-
+        
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                {!! Form::open(['route' => 'logout', 'id'=>'myform']) !!}
-                <a class="nav-link" href="javascript:{}" onclick="document.getElementById('myform').submit();">
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
-                {!! Form::close() !!}
-            </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+            <i class="fas fa-lg fa-user-circle"></i>
+          </a>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            
+            <a href="{!! route('users.edit_profile') !!}" class="dropdown-item">
+            Edit Profil
+            </a>
+            <div class="dropdown-divider"></div>
+            {!! Form::open(['route' => 'logout', 'id'=>'myform']) !!}
+            <a href="javascript:{}" onclick="document.getElementById('myform').submit();" class="dropdown-item">
+                <i class="fas fa-sign-out-alt"></i> Logout 
+            </a>
+            {!! Form::close() !!}
+            
+          </div>
+        </li>
+
         </ul>
     </nav>
     <!-- /.navbar -->
@@ -273,6 +290,8 @@
   <script src="{{asset('AdminLTE')}}/dist/js/adminlte.js"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+
+  <script src="{{asset('js')}}/admin.js"></script>
   @yield('scripts')
     <script>
         $(document).ready(function(){

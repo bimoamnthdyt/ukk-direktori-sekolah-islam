@@ -59,6 +59,7 @@ Route::group([
     Route::get('schools/editor_choice', 'SchoolController@editor_choice')->name('schools.editor_choice');
     Route::get('provinces/cities', 'ProvinceController@getCities')->name('provinces.cities');
     Route::get('reports/cities', 'ReportController@byCity')->name('reports.cities');
+    Route::get('users/edit_profile', 'UserController@edit_profile')->name('users.edit_profile');
 
     Route::resource('provinces', 'ProvinceController');
     Route::resource('cities', 'CityController');
@@ -68,6 +69,8 @@ Route::group([
     Route::resource('levels', 'LevelController');
     Route::resource('roles', 'RoleController');
     Route::resource('users', 'UserController');
+    
+    
 
     Route::get('verified_schools', 'SchoolController@verified')->name('schools.verified');
     Route::get('unverified_schools', 'SchoolController@unverified')->name('schools.unverified');

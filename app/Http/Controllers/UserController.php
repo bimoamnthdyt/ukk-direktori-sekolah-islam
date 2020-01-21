@@ -38,7 +38,12 @@ class UserController extends AppBaseController
      * @return Response
      */
     public function index(UserDataTable $userDataTable)
-    {
+    {   
+        // Only Admin and Owner can access the page
+        if(!\App\Models\Role::isAdmin()) {
+            return redirect(route('dashboard.index'));
+        }
+
         return $userDataTable->render('users.index');
     }
 
@@ -62,6 +67,11 @@ class UserController extends AppBaseController
         $areas = $this->dropDown($areas, 'name', 'id', 'Select an Option');
         $locations = $this->dropDown($locations, 'name', 'id', 'Select an Option');//$locations->pluck('name', 'id'); */
 
+        // Only Admin and Owner can access the page
+        if(!\App\Models\Role::isAdmin()) {
+            return redirect(route('dashboard.index'));
+        }
+
         return view('users.create');
     }
 
@@ -78,6 +88,11 @@ class UserController extends AppBaseController
         $input['password'] = Hash::make($input['password']);
         $user = $this->userRepository->create($input);
 
+        // Only Admin and Owner can access the page
+        if(!\App\Models\Role::isAdmin()) {
+            return redirect(route('dashboard.index'));
+        }
+        
         if(!empty($user)) {
             $user->role = $input['role'];
             $user->save();
@@ -101,6 +116,11 @@ class UserController extends AppBaseController
     {
         $user = $this->userRepository->findWithoutFail($id);
 
+        // Make sure only Admin and Owner can access the page
+        if(!\App\Models\Role::isAdmin() && auth()->user()->id != $user->id) {
+            return redirect(route('dashboard.index'));
+        }
+        
         if (empty($user)) {
             Flash::error('User not found');
 
@@ -120,6 +140,11 @@ class UserController extends AppBaseController
     public function edit($id)
     {
         $user = $this->userRepository->findWithoutFail($id);
+
+        // Make sure only Admin and Owner can access the page
+        if(!\App\Models\Role::isAdmin() && auth()->user()->id != $user->id) {
+            return redirect(route('dashboard.index'));
+        }
 
         if (empty($user)) {
             Flash::error('User not found');
@@ -142,6 +167,11 @@ class UserController extends AppBaseController
     public function update($id, UpdateUserRequest $request)
     {
         $user = $this->userRepository->findWithoutFail($id);
+
+        // Make sure only Admin and Owner can access the page
+        if(!\App\Models\Role::isAdmin() && auth()->user()->id != $user->id) {
+            return redirect(route('dashboard.index'));
+        }
 
         if (empty($user)) {
             Flash::error('User not found');
@@ -171,7 +201,11 @@ class UserController extends AppBaseController
 
         Flash::success('User updated successfully.');
 
-        return redirect(route('users.index'));
+        if(\App\Models\Role::isAdmin()) {
+            return redirect(route('users.index'));
+        } else {
+            return redirect(route('dashboard.index'));
+        }
     }
 
     /**
@@ -299,5 +333,17 @@ class UserController extends AppBaseController
         })->delete();
 
         echo "Success:". $count;
+    }
+
+    public function edit_profile() {
+        $user = $this->userRepository->findWithoutFail(auth()->user()->id);
+
+        if (empty($user)) {
+            Flash::error('User not found');
+
+            return redirect(route('users.index'));
+        }
+
+        return view('users.edit', compact('user'));
     }
 }
