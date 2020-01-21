@@ -32,7 +32,7 @@ class WebController extends AppBaseController
     {
         $facilities = \App\Models\Facility::where('display', true)->get();
         $editor_choices = \App\Models\School::orderBy('created_at', 'desc')->where('status', 'Published')->where('editor_choice', true)->take(4)->get();
-        $latest_schools = \App\Models\School::orderBy('created_at', 'desc')->where('status', 'Published')->take(8)->get();
+        $latest_schools = \App\Models\School::orderBy('created_at', 'desc')->where('status', 'Published')->orderBy('published_at', 'desc')->take(8)->get();
         $levels = \App\Models\Level::orderBy('sequence')->get();
 
         $cities = $this->getCities();

@@ -279,6 +279,7 @@ class SchoolController extends AppBaseController
         }
 
         $school->status = "Published";
+        $school->published_at = \Carbon\Carbon::now();
         $school->save();
 
         Flash::success('School published successfully.');

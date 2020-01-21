@@ -350,5 +350,16 @@
         "primary": false,
         "inForm": false,
         "inIndex": false
+    },
+    {
+        "name": "published_at",
+        "dbType": "timestamp",
+        "htmlType": "",
+        "validations": "",
+        "searchable": false,
+        "fillable": false,
+        "primary": false,
+        "inForm": false,
+        "inIndex": false
     }
 ]
