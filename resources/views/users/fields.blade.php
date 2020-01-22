@@ -28,7 +28,7 @@
                     </div>
                 </div>
             </div>
-
+            @if(\App\Models\Role::isAdmin())
             <div class="form-group form-group-sm col-sm-6">
                 <div class="row">
                     {!! Form::label('role', 'Role', ['class' => 'col-sm-3 col-form-label']) !!}
@@ -37,7 +37,9 @@
                     </div>
                 </div>
             </div>
-
+            @else
+            {!! Form::hidden('role', $user->role, ['class' => 'form-control']) !!}
+            @endif
         </div>
     </div>
 </div>

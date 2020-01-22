@@ -168,6 +168,8 @@ class UserController extends AppBaseController
     {
         $user = $this->userRepository->findWithoutFail($id);
 
+        $oldRole = $user->role;
+
         // Make sure only Admin and Owner can access the page
         if(!\App\Models\Role::isAdmin() && auth()->user()->id != $user->id) {
             return redirect(route('dashboard.index'));
@@ -192,11 +194,12 @@ class UserController extends AppBaseController
         $user = $this->userRepository->update($input, $id);
 
         if(!empty($user)) {
-            $user = \App\User::find($user->id);
-            $user->removeRole($user->role);
-
-            $user->save();
-            $user->assignRole($input['role']);
+            $userx = \App\User::find($user->id);
+            $userx->removeRole($oldRole);
+            $userx->save();
+            
+            \App\User::find($user->id)->assignRole($input['role']);
+            
         }
 
         Flash::success('User updated successfully.');
