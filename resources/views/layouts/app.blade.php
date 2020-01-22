@@ -291,11 +291,15 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
 
-  <script src="{{asset('js')}}/admin.js"></script>
+<script src="{{asset('AdminLTE')}}/plugins/popper/umd/popper.min.js"></script>
+
+
+<script src="{{asset('js')}}/admin.js"></script>
   @yield('scripts')
     <script>
         $(document).ready(function(){
             $('select').select2();
+            $('[data-toggle="tooltip"]').tooltip()
         });
     </script>
 </body>

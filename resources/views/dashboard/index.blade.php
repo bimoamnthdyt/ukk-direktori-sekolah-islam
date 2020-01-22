@@ -111,6 +111,7 @@
                                     <tr>
                                         <td>{{ $k+1 }}</td>
                                         <td>
+                                            <small data-placement="top" data-toggle="tooltip" href="#" data-original-title="{{ $school->whatStatus() }}" class="badge badge-pill badge-{{ $school->whatStatusColors() }}" style="position: relative;top: -2px;left: 0;">&nbsp;</small>
                                             {{ $school->created_at }}<br/>
                                             <a href="{{route('schools.show', $school->id)}}">{{ $school->nama_sekolah }}</a><br/>
                                             {{ $school->level->name }}<br/>

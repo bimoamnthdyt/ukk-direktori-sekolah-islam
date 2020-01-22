@@ -485,4 +485,29 @@ class School extends Model implements HasMedia
     {
         return $this->belongsTo(User::class, 'assignee', 'id');
     }
+
+    public function whatStatusColors() {
+
+        if(is_null($this->verified_at)) {
+            return config('app.school_status_buttons.Unverified');
+        } else if(!is_null($this->verified_at) && $this->status == "Unpublished") {
+            return config('app.school_status_buttons.Unpublished');
+        } else if(!is_null($this->verified_at) && $this->status == "Published") {
+            return config('app.school_status_buttons.Published');
+        } else {
+            return "dark";
+        }
+    }
+    public function whatStatus() {
+
+        if(is_null($this->verified_at)) {
+            return "Unverified";
+        } else if(!is_null($this->verified_at) && $this->status == "Unpublished") {
+            return "Unpublished";
+        } else if(!is_null($this->verified_at) && $this->status == "Published") {
+            return "Published";
+        } else {
+            return "No status";
+        }
+    }
 }

@@ -248,4 +248,5 @@ return [
     
     'pagination_page' => env('PAGINATION_PAGE', 40),
 
+    'school_status_buttons' => ["Unverified"=> "danger", "Verified" => "warning", "Unpublished" => "primary", "Published" => "success"],
 ];
