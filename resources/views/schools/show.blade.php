@@ -4,10 +4,10 @@
     <section class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
-                <div class="col-sm-6">
+                <div class="col-sm-3">
                     <h1>School</h1>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-9">
                     <div class="float-sm-right  mt-2">
                     <small data-placement="top" data-toggle="tooltip" href="#" data-original-title="School status: {{ $school->whatStatus() }}" class="badge badge-pill badge-{{ $school->whatStatusColors() }}" style="position: relative;top: -2px;left: 0;">{{ $school->whatStatus() }}</small>
                     &nbsp;/&nbsp;
