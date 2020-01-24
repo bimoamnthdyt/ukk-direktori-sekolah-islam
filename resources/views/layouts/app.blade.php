@@ -137,7 +137,7 @@
         }
 
         .content-header {
-            padding-bottom: 25px;
+            /* padding-bottom: 25px; */
         }
 
         .dataTables_wrapper .dataTables_paginate .paginate_button {
