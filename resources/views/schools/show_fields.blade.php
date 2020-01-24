@@ -385,7 +385,7 @@
         </div>
         <div class="card-footer">
             <!-- Submit Field -->
-            <div class="form-group col-sm-12 text-center">
+            <div class="form-group col-sm-12 text-center" id="btn_action_show_fields">
                 <a href="{!! route('schools.index') !!}" class="btn btn-default">Back</a>
 
                 @if(\App\Models\Role::isAdmin())
