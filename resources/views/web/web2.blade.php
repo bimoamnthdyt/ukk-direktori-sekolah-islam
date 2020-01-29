@@ -9,8 +9,12 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.min.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/assets/owl.carousel.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+
+    <link href="{{asset('FrontEnd/assets/css/photoswipe.4.1.3.css')}}" rel="stylesheet" />
+    <link href="{{asset('FrontEnd/assets/css/default-skin-413/default-skin.css')}}" rel="stylesheet" />
+
     <link rel="stylesheet" href="{{asset('FrontEnd/assets/css/style.css')}}?t=12312312">
     <link rel="stylesheet" href="{{asset('FrontEnd/assets/css/site.css')}}?t=12312312">
     <title>{{$title}} | SekolahSunnah.com</title>
@@ -95,69 +99,16 @@
                     </div>
                 </div>
                 <div class="collapse" id="collapseMainSearchForm" style="">
-                    {!! Form::open(['route' => 'web.search', 'class' => 'hero-form form', 'method' => 'get']) !!}
-                        <div class="container">
-                            <div class="main-search-form">
-                                <div class="form-row">
-                                    <div class="col-md-6 col-sm-6">
-                                        <div class="form-group">
-                                            {!! Form::label('keyword', 'Cari Sekolah Apa?', ['class' => 'col-form-label']) !!}
-                                            {!! Form::text('keyword', null, ['class' => 'form-control', 'placeholder' => "Masukkan nama sekolah..."]) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-3">
-                                        <div class="form-group">
-                                            {!! Form::label('city', 'Dimana?', ['class' => 'col-form-label']) !!}
-                                            {!! Form::select('city', $cities, ['class' => 'form-control width-100']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-3 col-sm-3">
-                                        <button type="submit" class="btn btn-primary width-100">Tampilkan Pencarian</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="alternative-search-form"><a href="#collapseAlternativeSearchForm" class="icon" data-toggle="collapse" aria-expanded="false" aria-controls="collapseAlternativeSearchForm"><i class="fa fa-plus"></i>Detail Pencarian</a>
-                                <div class="collapse" id="collapseAlternativeSearchForm">
-                                    <div class="wrapper">
-                                        <div class="form-row">
-                                            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 d-xs-grid d-flex align-items-center justify-content-between">
-                                                @foreach($facilities as $facility)
-                                                <label>
-                                                    <input type="checkbox" name="facilities[]" value="{{$facility->id}}"> {{$facility->name}}
-                                                </label>
-                                                @endforeach
-                                            </div>
-                                            <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12">
-                                                <div class="form-row">
-                                                    <div class="col-md-4 col-sm-4">
-                                                        <div class="form-group">
-                                                            <input name="min_price" type="text" class="form-control small" id="min-price" placeholder="Budget Minimal"><span class="input-group-addon small">Rp</span></div>
-                                                    </div>
-                                                    <div class="col-md-4 col-sm-4">
-                                                        <div class="form-group">
-                                                            <input name="max_price" type="text" class="form-control small" id="max-price" placeholder="Budget Maksimal"><span class="input-group-addon small">Rp</span></div>
-                                                    </div>
-                                                    <!--
-                                                    <div class="col-md-4 col-sm-4">
-                                                        <div class="form-group">
-                                                            <select name="distance" id="distance" class="small" data-placeholder="Jarak">
-                                                                <option value="">Jarak</option>
-                                                                <option value="1">1km</option>
-                                                                <option value="2">5km</option>
-                                                                <option value="3">10km</option>
-                                                                <option value="4">50km</option>
-                                                                <option value="5">100km</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>-->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {!! Form::close() !!}
+                @component('web.searchform', [
+                'keyword' => '', 
+                'cities' => $cities, 
+                'city' => '',
+                'facilities' => $facilities,
+                'min_price' => '',
+                'max_price' => '',
+                'facilities_form' => array(),
+                'expand' => false
+                ])@endcomponent
                 </div>
                 @yield('title')
                 <div class="background"></div>
@@ -221,10 +172,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/js/standalone/selectize.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.0/masonry.pkgd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/icheck.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.2.1/owl.carousel.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.11.1/jquery.validate.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js"></script>
+
+    <script src="{{asset('FrontEnd/assets/js/site.js')}}?t=12312312"></script>
+
+    <script src="{{asset('FrontEnd/assets/js/photoswipe.4.1.3.min.js')}}"></script>
+    <script src="{{asset('FrontEnd/assets/js/photoswipe-ui-default.4.1.3.min.js')}}"></script>
+
+
     <script src="{{asset('FrontEnd/assets/js/site.js')}}?t=12312312"></script>
 
     <script>

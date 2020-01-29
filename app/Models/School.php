@@ -244,13 +244,38 @@ class School extends Model implements HasMedia
         }
     }
 
-    public function getBrochureUrl() {
-        if(!empty($this->brochure)) {
-            return Storage::disk('s3')->url($this->brochure);
+    public function getBrochureUrl($number) {
+        // if(!empty($this->brochure)) {
+        //     return Storage::disk('s3')->url($this->brochure);
+        // }
+        // else {
+        //     return "";
+        // }
+
+        if(!empty($this->{"brochure".$number})) {
+            return Storage::disk('s3')->url($this->{"brochure".$number});
         }
         else {
             return "";
         }
+    }
+
+    public function getBrochures() {
+        $brochures = [];
+
+        for($i=1; $i<=8; $i++) {
+            $url = $this->getBrochureUrl($i);
+
+            if(!empty($url)) {
+                $brochures[] = $url;
+            }
+        }
+
+        // if(sizeof($brochures) == 0) {
+        //     $brochures[] = $this->getPhotoCoverUrl();
+        // }
+
+        return $brochures;
     }
 
     public function getPhotoUrl($number) {
@@ -322,10 +347,10 @@ class School extends Model implements HasMedia
 
     public function displaySPP($withMonth = true) {
         if($withMonth) {
-            return "Rp. " .$this->formattedBiayaSPP()."/Bulan";
+            return "Rp." .$this->formattedBiayaSPP()."/Bulan";
         }
         else {
-            return "Rp. " .$this->formattedBiayaSPP();
+            return "Rp." .$this->formattedBiayaSPP();
         }
     }
 
@@ -509,5 +534,10 @@ class School extends Model implements HasMedia
         } else {
             return "No status";
         }
+    }
+
+    public function getWhatSizeString($i) {
+        list($width, $height, $type, $attr) = getimagesize($i);
+        return $width."x".$height;
     }
 }

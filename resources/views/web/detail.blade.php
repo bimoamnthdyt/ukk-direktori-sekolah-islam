@@ -27,13 +27,64 @@
     .box h3 {
         margin-bottom: 5px;
     }
+
+    .my-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    /* padding: 0 4px; */
+    }
+
+    /* Create four equal columns that sits next to each other */
+    .my-gallery figure {
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px 0 0;
+    }
+
+    .my-gallery figure img {
+    /* margin-top: 8px; */
+    vertical-align: middle;
+    width: 100%;
+    }
+
+    /* Responsive layout - makes a two column-layout instead of four columns */
+    @media screen and (max-width: 800px) {
+    .column {
+        flex: 50%;
+        max-width: 50%;
+    }
+    }
+
+    /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+    @media screen and (max-width: 600px) {
+    .column {
+        flex: 100%;
+        max-width: 100%;
+    }
+    }
 </style>
 @endsection
 
 @section('title')
 <div class="page-title">
     <div class="container clearfix">
-        <div class="float-left float-xs-none">
+        <div class="row">
+            <div class="col-md-7">
+                <h1>{{$school->nama_sekolah}}
+                    {!! $school->getTags()!!}
+                </h1>
+                <h4 class="location">
+                    <a href="{{route('web.search', ['city'=>$school->city_id])}}">{{$school->city->city_province()}}</a>
+                </h4>
+            </div>
+            <div class="col-md-5 price">
+                <h1>{{$school->displaySPP(false)}}</h1>
+                <div class="id opacity-50">
+                    Per Bulan
+                </div>
+            </div>
+        </div>
+        <!-- <div class="float-left float-xs-none">
             <h1>{{$school->nama_sekolah}}
                 {!! $school->getTags()!!}
             </h1>
@@ -46,7 +97,7 @@
             <div class="id opacity-50">
                 Per Bulan
             </div>
-        </div>
+        </div> -->
     </div>
 </div>
 @endsection
@@ -55,20 +106,7 @@
 <section class="content">
     <section class="block detail">
         <div class="container">
-            <section>
-                <div class="gallery-carousel owl-carousel">
-                    @foreach($school->getPhotos() as $k=>$photo)
-                    <img src="{{$photo}}" alt="" data-hash="{{$k+1}}">
-                    @endforeach
-                </div>
-                <div class="gallery-carousel-thumbs owl-carousel">
-                    @foreach($school->getPhotos() as $k=>$photo)
-                    <a href="#{{$k+1}}" class="owl-thumb active-thumb background-image">
-                        <img src="{{$photo}}" alt="">
-                    </a>
-                    @endforeach
-                </div>
-            </section>
+            
             <div class="row flex-column-reverse flex-md-row">
                 <div class="col-md-8">
                     <section>
@@ -77,6 +115,23 @@
                             {!! $school->description !!}
                         </p>
                     </section>
+
+                    @if(sizeof($school->getBrochures()) > 0)
+                    <section>
+                        <h2>Brosur</h2>
+                        <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                            @foreach($school->getBrochures() as $k=>$brochure)
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                                <a href="{{$brochure}}" itemprop="contentUrl" data-size="{{ $school->getWhatSizeString($brochure) }}">
+                                    <img src="{{$brochure}}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description"></figcaption>
+                            </figure>
+                            @endforeach
+                        </div>
+                    </section>
+                    @endif
+
                     <section>
                         <h2>Fasilitas</h2>
                         <ul class="features-checkboxes columns-3">
@@ -90,6 +145,23 @@
                             @endforeach
                         </ul>
                     </section>
+                    
+                    
+                    @if(sizeof($school->getPhotos()) > 0)
+                    <section>
+                        <h2>Galeri</h2>
+                        <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
+                            @foreach($school->getPhotos() as $k=>$photo)
+                            <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
+                            <a href="{{$photo}}" itemprop="contentUrl" data-size="{{ $school->getWhatSizeString($photo) }}">
+                                    <img src="{{$photo}}" itemprop="thumbnail" alt="Image description" />
+                                </a>
+                                <figcaption itemprop="caption description"></figcaption>
+                            </figure>
+                            @endforeach
+                        </div>
+                    </section>
+                    @endif
 
                     @if($school->isLocationExists())
                     <section>
@@ -133,6 +205,51 @@
                                 <h3>Website</h3>
                                 <p><a target="_blank" href="{{ (new \App\Helpers\StringHelper)::prep_url($school->website) }}">{{$school->website}}</a></p>
                                 @endif
+
+                                <hr>
+                                @if(strlen($school->facebook) > 0)
+                                <a href="{{ $school->facebook }} " title="Facebook">
+                                    <span class="fa-stack fa-2x" style="color:black">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                                <!-- <a href="{{ $school->facebook }} " title="Facebook">
+                                    <span class="fa-stack" style="vertical-align: top; color:black">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a> -->
+                                @endif
+                                
+
+                                @if(strlen($school->instagram) > 0)
+                                <a href="{{ $school->instagram }} " title="Instagram">
+                                    <span class="fa-stack fa-2x" style="color:black">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                                @endif
+
+                                @if(strlen($school->twitter) > 0)
+                                <a href="{{ $school->twitter }} " title="Twitter">
+                                    <span class="fa-stack fa-2x" style="color:black">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                                @endif
+
+                                @if(strlen($school->youtube) > 0)
+                                <a href="{{ $school->youtube }} " title="Youtube">
+                                    <span class="fa-stack fa-2x" style="color:black">
+                                        <i class="fa fa-circle fa-stack-2x"></i>
+                                        <i class="fa fa-youtube fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                                @endif
+
                                 <!--<hr>
                                 <form class="form email">
                                     <div class="form-group">
@@ -167,6 +284,65 @@
     </section>
     @endif
 </section>
+
+<div id="gallery" class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="pswp__bg"></div>
+
+    <div class="pswp__scroll-wrap">
+
+        <div class="pswp__container">
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        <div class="pswp__item"></div>
+        </div>
+
+        <div class="pswp__ui pswp__ui--hidden">
+
+        <div class="pswp__top-bar">
+
+            <div class="pswp__counter"></div>
+
+            <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+            <button class="pswp__button pswp__button--share" title="Share"></button>
+
+            <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+            <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+            <div class="pswp__preloader">
+                <div class="pswp__preloader__icn">
+                    <div class="pswp__preloader__cut">
+                    <div class="pswp__preloader__donut"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- <div class="pswp__loading-indicator"><div class="pswp__loading-indicator__line"></div></div> -->
+
+        <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+            <div class="pswp__share-tooltip">
+                <!-- <a href="#" class="pswp__share--facebook"></a>
+                <a href="#" class="pswp__share--twitter"></a>
+                <a href="#" class="pswp__share--pinterest"></a>
+                <a href="#" download class="pswp__share--download"></a> -->
+            </div>
+        </div>
+
+        <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+        <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+        <div class="pswp__caption">
+            <div class="pswp__caption__center">
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+
+</div>
 @endsection
 
 @section('scripts')
@@ -201,5 +377,212 @@
         
         @endif
     });
+
+
+    var initPhotoSwipeFromDOM = function(gallerySelector) {
+
+        // parse slide data (url, title, size ...) from DOM elements 
+        // (children of gallerySelector)
+        var parseThumbnailElements = function(el) {
+            var thumbElements = el.childNodes,
+                numNodes = thumbElements.length,
+                items = [],
+                figureEl,
+                linkEl,
+                size,
+                item;
+
+            for(var i = 0; i < numNodes; i++) {
+
+                figureEl = thumbElements[i]; // <figure> element
+
+                // include only element nodes 
+                if(figureEl.nodeType !== 1) {
+                    continue;
+                }
+
+                linkEl = figureEl.children[0]; // <a> element
+
+                size = linkEl.getAttribute('data-size').split('x');
+
+                // create slide object
+                item = {
+                    src: linkEl.getAttribute('href'),
+                    w: parseInt(size[0], 10),
+                    h: parseInt(size[1], 10)
+                };
+
+
+
+                if(figureEl.children.length > 1) {
+                    // <figcaption> content
+                    item.title = figureEl.children[1].innerHTML; 
+                }
+
+                if(linkEl.children.length > 0) {
+                    // <img> thumbnail element, retrieving thumbnail url
+                    item.msrc = linkEl.children[0].getAttribute('src');
+                } 
+
+                item.el = figureEl; // save link to element for getThumbBoundsFn
+                items.push(item);
+            }
+
+            return items;
+        };
+
+        // find nearest parent element
+        var closest = function closest(el, fn) {
+            return el && ( fn(el) ? el : closest(el.parentNode, fn) );
+        };
+
+        // triggers when user clicks on thumbnail
+        var onThumbnailsClick = function(e) {
+            e = e || window.event;
+            e.preventDefault ? e.preventDefault() : e.returnValue = false;
+
+            var eTarget = e.target || e.srcElement;
+
+            // find root element of slide
+            var clickedListItem = closest(eTarget, function(el) {
+                return (el.tagName && el.tagName.toUpperCase() === 'FIGURE');
+            });
+
+            if(!clickedListItem) {
+                return;
+            }
+
+            // find index of clicked item by looping through all child nodes
+            // alternatively, you may define index via data- attribute
+            var clickedGallery = clickedListItem.parentNode,
+                childNodes = clickedListItem.parentNode.childNodes,
+                numChildNodes = childNodes.length,
+                nodeIndex = 0,
+                index;
+
+            for (var i = 0; i < numChildNodes; i++) {
+                if(childNodes[i].nodeType !== 1) { 
+                    continue; 
+                }
+
+                if(childNodes[i] === clickedListItem) {
+                    index = nodeIndex;
+                    break;
+                }
+                nodeIndex++;
+            }
+
+
+
+            if(index >= 0) {
+                // open PhotoSwipe if valid index found
+                openPhotoSwipe( index, clickedGallery );
+            }
+            return false;
+        };
+
+        // parse picture index and gallery index from URL (#&pid=1&gid=2)
+        var photoswipeParseHash = function() {
+            var hash = window.location.hash.substring(1),
+            params = {};
+
+            if(hash.length < 5) {
+                return params;
+            }
+
+            var vars = hash.split('&');
+            for (var i = 0; i < vars.length; i++) {
+                if(!vars[i]) {
+                    continue;
+                }
+                var pair = vars[i].split('=');  
+                if(pair.length < 2) {
+                    continue;
+                }           
+                params[pair[0]] = pair[1];
+            }
+
+            if(params.gid) {
+                params.gid = parseInt(params.gid, 10);
+            }
+
+            return params;
+        };
+
+        var openPhotoSwipe = function(index, galleryElement, disableAnimation, fromURL) {
+            var pswpElement = document.querySelectorAll('.pswp')[0],
+                gallery,
+                options,
+                items;
+
+            items = parseThumbnailElements(galleryElement);
+
+            // define options (if needed)
+            options = {
+
+                // define gallery index (for URL)
+                galleryUID: galleryElement.getAttribute('data-pswp-uid'),
+
+                getThumbBoundsFn: function(index) {
+                    // See Options -> getThumbBoundsFn section of documentation for more info
+                    var thumbnail = items[index].el.getElementsByTagName('img')[0], // find thumbnail
+                        pageYScroll = window.pageYOffset || document.documentElement.scrollTop,
+                        rect = thumbnail.getBoundingClientRect(); 
+
+                    return {x:rect.left, y:rect.top + pageYScroll, w:rect.width};
+                }
+
+            };
+
+            // PhotoSwipe opened from URL
+            if(fromURL) {
+                if(options.galleryPIDs) {
+                    // parse real index when custom PIDs are used 
+                    // http://photoswipe.com/documentation/faq.html#custom-pid-in-url
+                    for(var j = 0; j < items.length; j++) {
+                        if(items[j].pid == index) {
+                            options.index = j;
+                            break;
+                        }
+                    }
+                } else {
+                    // in URL indexes start from 1
+                    options.index = parseInt(index, 10) - 1;
+                }
+            } else {
+                options.index = parseInt(index, 10);
+            }
+
+            // exit if index not found
+            if( isNaN(options.index) ) {
+                return;
+            }
+
+            if(disableAnimation) {
+                options.showAnimationDuration = 0;
+            }
+
+            // Pass data to PhotoSwipe and initialize it
+            gallery = new PhotoSwipe( pswpElement, PhotoSwipeUI_Default, items, options);
+            gallery.init();
+        };
+
+        // loop through all gallery elements and bind events
+        var galleryElements = document.querySelectorAll( gallerySelector );
+
+        for(var i = 0, l = galleryElements.length; i < l; i++) {
+            galleryElements[i].setAttribute('data-pswp-uid', i+1);
+            galleryElements[i].onclick = onThumbnailsClick;
+        }
+
+        // Parse URL and open gallery if it contains #&pid=3&gid=1
+        var hashData = photoswipeParseHash();
+        if(hashData.pid && hashData.gid) {
+            openPhotoSwipe( hashData.pid ,  galleryElements[ hashData.gid - 1 ], true, true );
+        }
+        };
+
+        // execute above function
+        initPhotoSwipeFromDOM('.my-gallery');
 </script>
 @endsection

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
     <link rel="stylesheet" href="{{asset('FrontEnd/assets/css/style.css')}}?t=12312312">
     <link rel="stylesheet" href="{{asset('FrontEnd/assets/css/site.css')}}?t=12312312">
+    @yield('meta')
     @yield('css')
 
     @if(isset($title))
