@@ -6,7 +6,7 @@ use App\Models\School;
 use Yajra\DataTables\Services\DataTable;
 use Yajra\DataTables\EloquentDataTable;
 
-class SchoolDataTable extends DataTable
+class UserSchoolDataTable extends DataTable
 {
     /**
      * Build DataTable class.
@@ -17,9 +17,9 @@ class SchoolDataTable extends DataTable
     public function dataTable($query)
     {
         $dataTable = new EloquentDataTable($query);
-
+        
         return $dataTable
-            ->addColumn('action', 'schools.datatables_actions')
+            ->addColumn('action', 'users.datatables_user_school_actions')
             ->addColumn('level_name', function($school){
                 return $school->level->name;
             })
@@ -69,7 +69,8 @@ class SchoolDataTable extends DataTable
             ->selectRaw('schools.*, users.name AS assignee_name, CONCAT(cities.name, ", ", provinces.name) AS city_name')
             ->leftjoin('users', 'users.id', '=', 'schools.assignee')
             ->join('cities', 'cities.id', '=', 'schools.city_id')
-            ->join('provinces', 'provinces.id', '=', 'cities.province_id');
+            ->join('provinces', 'provinces.id', '=', 'cities.province_id')
+            ->where('schools.assignee', $this->id);
     }
 
     /**

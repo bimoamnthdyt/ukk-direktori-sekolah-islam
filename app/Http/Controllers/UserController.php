@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UserDataTable;
+use App\DataTables\UserSchoolDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdateUserRequest;
@@ -112,7 +113,7 @@ class UserController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show($id, UserSchoolDataTable $userSchoolDataTable)
     {
         $user = $this->userRepository->findWithoutFail($id);
 
@@ -127,7 +128,9 @@ class UserController extends AppBaseController
             return redirect(route('users.index'));
         }
 
-        return view('users.show')->with('user', $user);
+        // return view('users.show')->with('user', $user);
+        return $userSchoolDataTable->with('id', $user->id)->render('users.show', ['user'=>$user]);
+        
     }
 
     /**

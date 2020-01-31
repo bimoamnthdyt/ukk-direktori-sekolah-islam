@@ -64,12 +64,7 @@ class EditorChoiceSchoolDataTable extends DataTable
                 return $html;
             })
             ->addColumn('status_name', function($school){
-                if(!empty($school->verified_at)){
-                    return "<span class=\"badge badge-success\">Verified</span>";
-                }
-                else {
-                    return "<span class=\"badge badge-danger\">Unverified</span>";
-                }
+                return "<span class=\"badge badge-".$school->whatStatusColors()."\">".$school->whatStatus()."</span>";
             })
             ->addColumn('assignee_name', function($school){
                 return !empty($school->pic)?$school->pic->name:'';

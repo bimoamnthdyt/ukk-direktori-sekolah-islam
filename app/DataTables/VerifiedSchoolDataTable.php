@@ -32,12 +32,7 @@ class VerifiedSchoolDataTable extends DataTable
                 return $city_name;
             })
             ->addColumn('status_name', function($school){
-                if($school->status == 'Published'){
-                    return "<span class=\"badge badge-success\">Published</span>";
-                }
-                else {
-                    return "<span class=\"badge badge-danger\">Unpublished</span>";
-                }
+                return "<span class=\"badge badge-".$school->whatStatusColors()."\">".$school->whatStatus()."</span>";
             })
             ->addColumn('facility', function($school){
                 $html = "";

@@ -19,6 +19,7 @@ class UserDataTable extends DataTable
         $dataTable = new EloquentDataTable($query);
 
         return $dataTable->addColumn('action', 'users.datatables_actions');
+
     }
 
     /**
@@ -29,7 +30,9 @@ class UserDataTable extends DataTable
      */
     public function query(User $model)
     {
-        return $model->newQuery();
+        // return $model->newQuery();
+        return $model->newQuery()
+            ->selectRaw('users.*, (SELECT count(assignee) FROM schools WHERE assignee = users.id) AS count_school');
     }
 
     /**
@@ -42,7 +45,6 @@ class UserDataTable extends DataTable
         return $this->builder()
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->addAction(['width' => '120px'])
             ->parameters([
                 'dom'     => 'frtip',
                 'order'   => [[0, 'desc']],
@@ -65,10 +67,13 @@ class UserDataTable extends DataTable
      */
     protected function getColumns()
     {
+
         return [
             'name',
             'email',
             'role',
+            'count_school' => ['searchable' => true, 'title' => 'Schools', 'class' => 'text-center', 'orderable' => true],
+            'action',
             //'password',
             //'remember_token'
         ];

@@ -78,4 +78,9 @@ class User extends Model
             return asset('images/user2.png');
         }
     }
+
+    public function getSchoolsCount() {
+        $count = \App\Models\School::where('assignee', $this->id)->count();
+        return $count;
+    }
 }
