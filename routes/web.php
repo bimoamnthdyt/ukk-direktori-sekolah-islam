@@ -74,5 +74,7 @@ Route::group([
 
     Route::get('verified_schools', 'SchoolController@verified')->name('schools.verified');
     Route::get('unverified_schools', 'SchoolController@unverified')->name('schools.unverified');
+    Route::get('unpublished_schools', 'SchoolController@unpublished')->name('schools.unpublished');
+    Route::get('published_schools', 'SchoolController@published')->name('schools.published');
     Route::post('media', 'MediaController@storeMedia')->name('media.store');
 });

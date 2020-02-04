@@ -11,6 +11,10 @@
                     <h1>Unverified School</h1>
                     @elseif(Request::is('admin/verified_schools*'))
                     <h1>Verified School</h1>
+                    @elseif(Request::is('admin/unpublished_schools*'))
+                    <h1>Unpublished School</h1>
+                    @elseif(Request::is('admin/published_schools*'))
+                    <h1>Published School</h1>
                     @endif
                 </div>
                 <div class="col-sm-6">

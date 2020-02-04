@@ -3,7 +3,7 @@
 </li>
 
 @php
-$is_school = Request::is('admin/schools*') || Request::is('admin/unverified_schools*') || Request::is('admin/verified_schools*')
+$is_school = Request::is('admin/schools*') || Request::is('admin/unverified_schools*') || Request::is('admin/verified_schools*') || Request::is('admin/unpublished_schools*') || Request::is('admin/published_schools*')
 @endphp
 
 <li class="nav-item has-treeview {{ $is_school ? 'menu-open' : '' }}">
@@ -24,7 +24,11 @@ $is_school = Request::is('admin/schools*') || Request::is('admin/unverified_scho
         </li>
 
         <li class="nav-item">
-            <a href="{!! route('schools.verified') !!}" class="nav-link {{ Request::is('admin/verified_schools*') ? 'active' : '' }}"><i class="fa fa-check-circle nav-icon"></i><p>Verified</p></a>
+            <a href="{!! route('schools.unpublished') !!}" class="nav-link {{ Request::is('admin/unpublished_schools*') ? 'active' : '' }}"><i class="fa fa-check-circle nav-icon"></i><p>Unpublished</p></a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{!! route('schools.published') !!}" class="nav-link {{ Request::is('admin/published_schools*') ? 'active' : '' }}"><i class="fa fa-check-circle nav-icon"></i><p>Published</p></a>
         </li>
 
         @if(\App\Models\Role::isAdmin())

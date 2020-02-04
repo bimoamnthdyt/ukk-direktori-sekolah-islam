@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\DataTables\SchoolDataTable;
 use App\DataTables\VerifiedSchoolDataTable;
 use App\DataTables\UnverifiedSchoolDataTable;
+use App\DataTables\UnpublishedSchoolDataTable;
+use App\DataTables\PublishedSchoolDataTable;
 use App\DataTables\EditorChoiceSchoolDataTable;
 use App\Http\Requests;
 use App\Http\Requests\CreateSchoolRequest;
@@ -44,6 +46,16 @@ class SchoolController extends AppBaseController
     }
 
     public function unverified(UnverifiedSchoolDataTable $schoolDataTable)
+    {
+        return $schoolDataTable->render('schools.index');
+    }
+
+    public function unpublished(UnpublishedSchoolDataTable $schoolDataTable)
+    {
+        return $schoolDataTable->render('schools.index');
+    }
+
+    public function published(PublishedSchoolDataTable $schoolDataTable)
     {
         return $schoolDataTable->render('schools.index');
     }
