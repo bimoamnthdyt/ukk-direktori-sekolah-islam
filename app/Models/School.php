@@ -537,7 +537,12 @@ class School extends Model implements HasMedia
     }
 
     public function getWhatSizeString($i) {
-        list($width, $height, $type, $attr) = getimagesize($i);
-        return $width."x".$height;
+        if ($data = getimagesize($i)) {
+            list($width, $height, $type, $attr) = $data;
+            return $width."x".$height;
+        } else {
+            return "640x800";
+        }
+        
     }
 }
