@@ -73,9 +73,9 @@ class UnverifiedSchoolDataTable extends DataTable
         return $model->newQuery()
             ->selectRaw('schools.*, users.name AS assignee_name, levels.name AS level_name, CONCAT(cities.name, ", ", provinces.name) AS city_name')
             ->leftjoin('users', 'users.id', '=', 'schools.assignee')
-            ->leftjoin('levels', 'levels.id', '=', 'schools.level_id')
-            ->join('cities', 'cities.id', '=', 'schools.city_id')
-            ->join('provinces', 'provinces.id', '=', 'cities.province_id')
+            ->join('levels', 'levels.id', '=', 'schools.level_id')
+            ->leftjoin('cities', 'cities.id', '=', 'schools.city_id')
+            ->leftjoin('provinces', 'provinces.id', '=', 'cities.province_id')
             ->whereNull('schools.verified_at');
     }
 
