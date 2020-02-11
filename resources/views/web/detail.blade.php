@@ -205,7 +205,7 @@
                 <div class="col-md-4">
                     <aside class="sidebar">
                         <section>
-                            <h2>Data Lainnya</h2>
+                            <h2 class="d-xs-none">Data Lainnya</h2>
                             <div class="box">
                                 <h3>Nama</h3>
                                 <p>{{$school->nama_sekolah}}</p>
