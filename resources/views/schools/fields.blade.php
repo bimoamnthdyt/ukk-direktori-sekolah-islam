@@ -491,7 +491,7 @@
                     $('#myForm').find('input[name="brochures[]"][value="' + name + '"]').remove()
                 },
                 init: function () {
-                    this.on("addedfile", function(event) {
+                    this.on("addedfile", function(file) {
                         while (this.files.length > this.options.maxFiles) {
                             alert('Maximum files allowed are 8 files. The system will automatically remove the first file.')
                             this.removeFile(file);
