@@ -419,7 +419,7 @@
             });*/
 
             $("#logo").dropzone({
-                url: "{{ route('media.store') }}?collection=logos",
+                url: "{{ route('webmedia.store') }}?collection=logos",
                 acceptedFiles: 'image/*',
                 maxFilesize: 5, // MB
                 maxFiles: 1,
@@ -463,7 +463,7 @@
             });
 
             $("#brochure").dropzone({
-                url: "{{ route('media.store') }}?collection=brochures",
+                url: "{{ route('webmedia.store') }}?collection=brochures",
                 acceptedFiles: 'image/*,application/pdf',
                 maxFilesize: 5, // MB
                 maxFiles: 8,
@@ -527,7 +527,7 @@
             });
 
             $("#photo").dropzone({
-                url: "{{ route('media.store') }}?collection=photos",
+                url: "{{ route('webmedia.store') }}?collection=photos",
                 acceptedFiles: 'image/*',
                 maxFilesize: 5, // MB
                 maxFiles: 8,
