@@ -183,7 +183,7 @@ class WebController extends AppBaseController
     public function store(CreateSchoolRequest $request)
     {
         $input = $request->all();
-
+        
         $school = $this->schoolRepository->create($input);
 
         for($i = 0; $i < 8; $i++){

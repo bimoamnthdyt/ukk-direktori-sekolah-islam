@@ -55,7 +55,7 @@
             @include('adminlte-templates::common.errors')
             @include('flash::message')
 
-            {!! Form::open(['route' => 'web.store', 'class' => 'form-horizontal hero-form form dropzone', 'files' => true, 'autocomplete' => "autocomplete_off_hack_xfr4!k", 'id' => 'myform']) !!}
+            {!! Form::open(['route' => 'web.store', 'class' => 'form-horizontal hero-form form dropzone', 'files' => true, 'autocomplete' => "autocomplete_off_hack_xfr4!k", 'id' => 'myForm']) !!}
                 {!! Form::text('hidden', null, ['autocomplete' => "autocomplete_off_hack_xfr4!k", 'style'=> 'display:none;']) !!}
 
                 <div class="main-search-form">
