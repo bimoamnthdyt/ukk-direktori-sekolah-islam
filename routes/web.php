@@ -32,6 +32,8 @@ Route::get('cities/autocomplete', 'CityController@autocomplete')->name('cities.a
 Route::get('tentang', 'WebController@tentang')->name('web.tentang');
 Route::get('contact', 'WebController@contact')->name('web.contact');
 
+Route::post('media', 'MediaController@storeMedia')->name('media.store');
+
 // Keep below route at bottom
 Route::get('{slug_sekolah}', 'WebController@detail')->name('web.detail');
 
