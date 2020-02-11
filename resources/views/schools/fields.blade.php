@@ -463,7 +463,7 @@
 
             $("#brochure").dropzone({
                 url: "{{ route('media.store') }}?collection=brochures",
-                acceptedFiles: 'application/pdf',
+                acceptedFiles: 'image/*,application/pdf',
                 maxFilesize: 5, // MB
                 maxFiles: 8,
                 addRemoveLinks: true,

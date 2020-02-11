@@ -365,11 +365,16 @@
             var file = {'size': 5400, 'name': name};
             var ss = dz.files.push(file);
 
+            var ext = url.substr(url.lastIndexOf('.') + 1).toLowerCase();
+            if(ext === "pdf") {
+                url = "{{asset('FrontEnd/assets/img/pdf-icon-thumb.png')}}"
+            }
+
             dz.options.addedfile.call(dz, file);
             dz.options.thumbnail.call(dz, file, url);
             file.previewElement.classList.add('dz-complete');
             $('#myForm').append('<input type="hidden" name="' + field + '" value="' + file.name + '">');
-            console.log('<input type="hidden" name="' + field + '" value="' + file.name + '">');
+            // console.log('<input type="hidden" name="' + field + '" value="' + file.name + '">');
         }
 
         $(document).ready(function(){
@@ -415,6 +420,7 @@
 
             $("#logo").dropzone({
                 url: "{{ route('media.store') }}?collection=logos",
+                acceptedFiles: 'image/*',
                 maxFilesize: 5, // MB
                 maxFiles: 1,
                 addRemoveLinks: true,
@@ -458,6 +464,7 @@
 
             $("#brochure").dropzone({
                 url: "{{ route('media.store') }}?collection=brochures",
+                acceptedFiles: 'image/*,application/pdf',
                 maxFilesize: 5, // MB
                 maxFiles: 8,
                 addRemoveLinks: true,
@@ -485,6 +492,13 @@
                     $('#myForm').find('input[name="brochures[]"][value="' + name + '"]').remove()
                 },
                 init: function () {
+                    this.on("addedfile", function(event) {
+                        while (this.files.length > this.options.maxFiles) {
+                            alert('Maximum files allowed are 8 files. The system will automatically remove the first file.')
+                            this.removeFile(file);
+                        }
+                    });
+
                     @php
                         $files = [];
                         $urls = [];
@@ -514,6 +528,7 @@
 
             $("#photo").dropzone({
                 url: "{{ route('media.store') }}?collection=photos",
+                acceptedFiles: 'image/*',
                 maxFilesize: 5, // MB
                 maxFiles: 8,
                 addRemoveLinks: true,
@@ -540,6 +555,12 @@
                     $('#myForm').find('input[name="photos[]"][value="' + name + '"]').remove()
                 },
                 init: function () {
+                    this.on("addedfile", function(event) {
+                        while (this.files.length > this.options.maxFiles) {
+                            alert('Maximum files allowed are 8 files. The system will automatically remove the first file.')
+                            this.removeFile(file);
+                        }
+                    });
                     @php
                         $files = [];
                         $urls = [];
