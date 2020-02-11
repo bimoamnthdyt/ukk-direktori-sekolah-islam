@@ -474,7 +474,8 @@ class School extends Model implements HasMedia
         }
 
         if(sizeof($photos) == 0) {
-            $photos[] = $this->getPhotoCoverUrl();
+            $cover = $this->getPhotoCoverUrl();
+            if(!empty($cover)) $photos[] = $cover;
         }
 
         return $photos;

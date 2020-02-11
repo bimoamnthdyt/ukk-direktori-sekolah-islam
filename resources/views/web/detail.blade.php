@@ -42,10 +42,31 @@
     }
 
     .my-gallery figure img {
-    /* margin-top: 8px; */
     vertical-align: middle;
     width: 100%;
     }
+
+    /* .my-gallery figure {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+    }
+    .my-gallery figure img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    max-height: 100%;
+    width: auto;
+    -webkit-transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+            transform: translate(-50%,-50%);
+            
+    }
+    .my-gallery figure img.portrait {
+    width: 100%;
+    height: auto;
+    } */
 
     /* Responsive layout - makes a two column-layout instead of four columns */
     @media screen and (max-width: 800px) {
@@ -121,9 +142,19 @@
                         <h2>Brosur</h2>
                         <div class="my-gallery" itemscope itemtype="http://schema.org/ImageGallery">
                             @foreach($school->getBrochures() as $k=>$brochure)
+                            @php
+                            $path_parts = pathinfo($brochure);
+                            if($path_parts['extension'] === "pdf") {
+                                $brochure_thumb = asset('FrontEnd/assets/img/download-brochure.jpeg');
+                                $data_size = '100x100';
+                            } else {
+                                $brochure_thumb = $brochure;
+                                $data_size = $school->getWhatSizeString($brochure_thumb);
+                            }
+                            @endphp
                             <figure itemprop="associatedMedia" itemscope itemtype="http://schema.org/ImageObject">
-                                <a href="{{$brochure}}" itemprop="contentUrl" data-size="{{ $school->getWhatSizeString($brochure) }}">
-                                    <img src="{{$brochure}}" itemprop="thumbnail" alt="Image description" />
+                                <a href="{{$brochure}}" itemprop="contentUrl" data-size="{{ $data_size }}">
+                                    <img src="{{$brochure_thumb}}" itemprop="thumbnail" alt="Image description" />
                                 </a>
                                 <figcaption itemprop="caption description"></figcaption>
                             </figure>
@@ -131,7 +162,8 @@
                         </div>
                     </section>
                     @endif
-
+                    
+                    @if(sizeof($school->facilities) > 0)
                     <section>
                         <h2>Fasilitas</h2>
                         <ul class="features-checkboxes columns-3">
@@ -145,7 +177,7 @@
                             @endforeach
                         </ul>
                     </section>
-                    
+                    @endif
                     
                     @if(sizeof($school->getPhotos()) > 0)
                     <section>
@@ -405,6 +437,13 @@
 
                 size = linkEl.getAttribute('data-size').split('x');
 
+                var u = linkEl.getAttribute('href')
+
+                var ext = u.substr(u.lastIndexOf('.') + 1).toLowerCase();
+                if(ext === "pdf") {
+                    continue;
+                }
+                
                 // create slide object
                 item = {
                     src: linkEl.getAttribute('href'),
@@ -459,8 +498,9 @@
                 numChildNodes = childNodes.length,
                 nodeIndex = 0,
                 index;
-
+            
             for (var i = 0; i < numChildNodes; i++) {
+                
                 if(childNodes[i].nodeType !== 1) { 
                     continue; 
                 }
@@ -473,10 +513,15 @@
             }
 
 
-
-            if(index >= 0) {
-                // open PhotoSwipe if valid index found
-                openPhotoSwipe( index, clickedGallery );
+            var url = clickedListItem.childNodes[1].getAttribute('href')
+            var ext = url.substr(url.lastIndexOf('.') + 1).toLowerCase();
+            if(ext === "pdf") {
+                window.open(url);
+            } else {
+                if(index >= 0) {
+                    // open PhotoSwipe if valid index found
+                    openPhotoSwipe( index, clickedGallery );
+                }
             }
             return false;
         };

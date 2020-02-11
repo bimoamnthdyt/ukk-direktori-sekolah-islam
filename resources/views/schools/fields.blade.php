@@ -387,11 +387,15 @@
             var file = {'size': 5400, 'name': name};
             var ss = dz.files.push(file);
 
+            var ext = url.substr(url.lastIndexOf('.') + 1).toLowerCase();
+            if(ext === "pdf") {
+                url = "{{asset('FrontEnd/assets/img/pdf-icon-thumb.png')}}"
+            }
             dz.options.addedfile.call(dz, file);
             dz.options.thumbnail.call(dz, file, url);
             file.previewElement.classList.add('dz-complete');
             $('#myForm').append('<input type="hidden" name="' + field + '" value="' + file.name + '">');
-            console.log('<input type="hidden" name="' + field + '" value="' + file.name + '">');
+            // console.log('<input type="hidden" name="' + field + '" value="' + file.name + '">');
         }
 
         $(document).ready(function(){
@@ -415,6 +419,7 @@
 
             $("#logo").dropzone({
                 url: "{{ route('media.store') }}?collection=logos",
+                acceptedFiles: 'image/*',
                 maxFilesize: 5, // MB
                 maxFiles: 1,
                 addRemoveLinks: true,
@@ -458,6 +463,7 @@
 
             $("#brochure").dropzone({
                 url: "{{ route('media.store') }}?collection=brochures",
+                acceptedFiles: 'application/pdf',
                 maxFilesize: 5, // MB
                 maxFiles: 8,
                 addRemoveLinks: true,
@@ -520,6 +526,7 @@
 
             $("#photo").dropzone({
                 url: "{{ route('media.store') }}?collection=photos",
+                acceptedFiles: 'image/*',
                 maxFilesize: 5, // MB
                 maxFiles: 8,
                 addRemoveLinks: true,
