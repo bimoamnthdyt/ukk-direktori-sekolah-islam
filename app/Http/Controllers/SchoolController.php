@@ -14,6 +14,7 @@ use App\Http\Requests\UpdateSchoolRequest;
 use App\Repositories\SchoolRepository;
 use Flash;
 use App\Http\Controllers\AppBaseController;
+use App\Http\Controllers\MediaController;
 use Response;
 use Illuminate\Support\Facades\Storage;
 use Input;
@@ -353,6 +354,69 @@ class SchoolController extends AppBaseController
         return redirect(route('schools.editor_choice'));
     }
 
+    public function duplicate($id)
+    {
+        $school = $this->schoolRepository->find($id);
+
+        if (empty($school)) {
+            Flash::error('School not found');
+
+            return redirect(route('schools.show', ['id'=>$id]));
+        }
+
+        $newSchool = $school->replicate();
+        $newSchool->save();
+
+        $newSchool->nama_sekolah = $school->nama_sekolah.'_'.$newSchool->id;
+        $newSchool->slug_sekolah = Str::slug($newSchool->nama_sekolah, '-');
+        if(!empty($school->logo)) {
+            $newLogoFilePath = (new MediaController)->copyMedia('logos', $school->logo);
+        } else {
+            $newLogoFilePath = null;
+        }
+        $newSchool->logo = $newLogoFilePath;
+
+        for($i = 0; $i < 8; $i++){
+            if(!empty($newSchool->{"brochure".($i+1)})) {
+                $newBrochureFilePath = (new MediaController)->copyMedia('brochures', $school->{"brochure".($i+1)});
+            } else {
+                $newBrochureFilePath = null;
+            }
+            $newSchool->{"brochure".($i+1)} = !empty($newBrochureFilePath) ? $newBrochureFilePath : null;
+
+
+            if(!empty($newSchool->{"photo".($i+1)})) {
+                $newPhotoFilePath = (new MediaController)->copyMedia('photos', $school->{"photo".($i+1)});
+            } else {
+                $newPhotoFilePath = null;
+            }
+            $newSchool->{"photo".($i+1)} = !empty($newPhotoFilePath) ? $newPhotoFilePath : null;
+        }
+
+        $newSchool->created_at = date('Y-m-d H:i:s');
+        $newSchool->updated_at = date('Y-m-d H:i:s');
+
+        if(\App\Models\Role::isAdmin()) {
+            $newSchool->verified_at = date('Y-m-d H:i:s');
+        }
+        $newSchool->status = 'Unpublished';
+        $newSchool->published_at = null;
+
+        $newSchool->created_by = auth()->user()->id;
+        $newSchool->updated_by = auth()->user()->id;
+
+        $newSchool->save();
+        // $school->status = "Published";
+        // $school->published_at = \Carbon\Carbon::now();
+        // $school->save();
+
+        // Flash::success('School published successfully.');
+
+        // return redirect(route('schools.verified'));
+        
+        return redirect(route('schools.edit', ['id'=>$newSchool->id]));
+        
+    }
     /*
     public function storeMedia($id)
     {

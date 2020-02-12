@@ -386,7 +386,7 @@
         <div class="card-footer">
             <!-- Submit Field -->
             <div class="form-group col-sm-12 text-center" id="btn_action_show_fields">
-                <a href="{!! route('schools.index') !!}" class="btn btn-default">Back</a>
+                <a href="{!! route('schools.index') !!}" class="btn btn-default float-left">Back</a>
 
                 @if(\App\Models\Role::isAdmin())
                     <a href="{!! route('schools.edit', $school->id) !!}" class="btn btn-primary">Edit</a>
@@ -408,6 +408,8 @@
                     <a href="{!! route('schools.unpublish', $school->id) !!}" class="btn btn-danger">Unpublish</a>
                     @endif
                 @endif
+
+                <a href="{!! route('schools.duplicate', $school->id) !!}" class="btn btn-secondary float-right">Duplicate</a>
             </div>
         </div>
     </div>

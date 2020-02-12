@@ -33,6 +33,21 @@ class MediaController extends AppBaseController
         ]);
     }
 
+    public function copyMedia($collection, $fileName)
+    {
+        $filePath = '';
+
+        if(!empty($fileName)) {
+            $name = time() . '_'. $fileName;
+            $filePath = $collection . '/' . $name;
+
+            Storage::disk('s3')->copy($fileName, $filePath, 'public');
+            return $filePath;
+        }
+        return false;
+        
+    }
+
     /*public function storeMedia(Request $request)
     {
         $path = storage_path('tmp/uploads');
