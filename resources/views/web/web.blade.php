@@ -108,12 +108,12 @@
                         <div class="row align-items-center justify-content-center d-flex">
                             <div class="col-md-10 py-5">
                                 <h2>Dapatkan Info Sekolah Sunnah Terkini di Email Anda</h2>
-                                {!! Form::open(['route' => 'web.subscribe', 'class' => 'form email', 'id' => 'myForm']) !!}
+                                {!! Form::open(['route' => 'web.subscribe', 'class' => 'form email', 'id' => 'myForm_subscribe']) !!}
                                     <div class="form-row">
                                         <div class="col-md-11 col-sm-11">
                                             <div class="form-group">
                                                 {!! Form::label('email', 'Alamat Email', ['class' => 'col-form-label']) !!}
-                                                {!! Form::email('email', null, ['class' => 'form-control', 'placeholder' => 'Masukan alamat email', 'required']) !!}
+                                                {!! Form::email('email_subscribe', null, ['class' => 'form-control', 'placeholder' => 'Masukan alamat email', 'required']) !!}
                                             </div>
                                         </div>
                                         <div class="col-md-1 col-sm-1">

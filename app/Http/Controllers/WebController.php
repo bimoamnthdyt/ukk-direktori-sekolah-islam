@@ -220,7 +220,7 @@ class WebController extends AppBaseController
     }
 
     public function subscribe() {
-        $email = Input::get('email');
+        $email = Input::get('email_subscribe');
 
         $subsriber = new \App\Models\Subscriber;
         $subsriber->email = $email;
