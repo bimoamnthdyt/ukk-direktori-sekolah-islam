@@ -70,6 +70,7 @@
 
                         <div class="form-row">
                             <div class="col-md-12 col-sm-12">
+                                <div class="text-danger mb-3 text-right">* Penanda isian harus diisi</div>
                                 <div class="alert alert-info"><strong>Perhatian</strong> Jika lembaga pendidikan memiliki lebih dari satu jenjang (SD, SMP, SMA, dst), mohon diisikan secara terpisah.</div>
                             </div>
                         </div>
@@ -77,7 +78,7 @@
                         <div class="form-row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
-                                    {!! Form::label('nama_sekolah', 'Nama Sekolah', ['class' => 'col-form-label']) !!}
+                                    {!! Form::label('nama_sekolah', 'Nama Sekolah <span class="text-danger">*</span>', ['class' => 'col-form-label'], false) !!}
                                     {!! Form::text('nama_sekolah', null, ['class' => 'form-control', 'placeholder' => "Masukkan nama sekolah..."]) !!}
                                 </div>
                             </div>
@@ -106,13 +107,13 @@
                         <div class="form-row">
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
-                                    {!! Form::label('biaya_pendaftaran', 'Uang Masuk', ['class' => 'col-form-label']) !!}
+                                    {!! Form::label('biaya_pendaftaran', 'Uang Masuk <span class="text-danger">*</span>', ['class' => 'col-form-label'], false) !!}
                                     {!! Form::text('biaya_pendaftaran', null, ['class' => 'form-control', 'placeholder' => "Masukkan uang masuk..."]) !!}
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-6">
                                 <div class="form-group">
-                                    {!! Form::label('biaya_spp', 'Biaya Bulanan', ['class' => 'col-form-label']) !!}
+                                    {!! Form::label('biaya_spp', 'Biaya Bulanan <span class="text-danger">*</span>', ['class' => 'col-form-label'], false) !!}
                                     {!! Form::text('biaya_spp', null, ['class' => 'form-control', 'placeholder' => "Masukkan biaya SPP.."]) !!}
                                     <!--<span class="geo-location input-group-addon" data-toggle="tooltip" data-placement="top" title="Find My Position"><i class="fa fa-map-marker"></i></span>-->
                                 </div>
@@ -154,14 +155,14 @@
 
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
-                                    {!! Form::label('city_id', 'Kabupaten/Kota', ['class' => 'col-form-label']) !!}
+                                    {!! Form::label('city_id', 'Kabupaten/Kota <span class="text-danger">*</span>', ['class' => 'col-form-label'], false) !!}
                                     {!! Form::select('city_id', $cities, null, ['placeholder' => 'Pilih Kabupaten/Kota']) !!}
                                 </div>
                             </div>
 
                             <div class="col-md-8 col-sm-8">
                                 <div class="form-group">
-                                    {!! Form::label('address', 'Alamat', ['class' => 'col-form-label']) !!}
+                                    {!! Form::label('address', 'Alamat <span class="text-danger">*</span>', ['class' => 'col-form-label'], false) !!}
                                     {!! Form::textarea('address', null, ['class' => 'form-control', 'placeholder' => "Masukkan alamat...", 'rows' => 4]) !!}
                                 </div>
                             </div>
@@ -189,7 +190,7 @@
                         <div class="form-row">
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
-                                    {!! Form::label('phone1', 'Telpon 1', ['class' => 'col-form-label']) !!}
+                                    {!! Form::label('phone1', 'Telpon 1 <span class="text-danger">*</span>', ['class' => 'col-form-label'], false) !!}
                                     {!! Form::text('phone1', null, ['class' => 'form-control', 'placeholder' => "Masukan Telpon ..."]) !!}
                                 </div>
                             </div>
@@ -204,13 +205,13 @@
                         <div class="form-row">
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
-                                    {!! Form::label('contact_person', 'Contact Person', ['class' => 'col-form-label']) !!}
+                                    {!! Form::label('contact_person', 'Contact Person <span class="text-danger">*</span>', ['class' => 'col-form-label'], false) !!}
                                     {!! Form::text('contact_person', null, ['class' => 'form-control', 'placeholder' => "Masukan Contact Person ..."]) !!}
                                 </div>
                             </div>
                             <div class="col-md-4 col-sm-4">
                                 <div class="form-group">
-                                    {!! Form::label('hp', 'HP', ['class' => 'col-form-label']) !!}
+                                    {!! Form::label('hp', 'Nomor HP <span class="text-danger">*</span>', ['class' => 'col-form-label'],  false) !!}
                                     {!! Form::text('hp', null, ['class' => 'form-control', 'placeholder' => "Masukkan Nomor HP ..."]) !!}
                                 </div>
                             </div>

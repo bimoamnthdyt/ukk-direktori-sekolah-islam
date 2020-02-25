@@ -23,7 +23,7 @@
 @elseif($pageType == 'create')
 {!! Form::hidden('status', 'Unpublished', ['class' => 'form-control']) !!}
 @endif
-
+<div class="text-danger mb-3 text-right">* Penanda isian harus diisi</div>
 <div class="card card-primary">
     <div class="card-header">
         <h3 class="card-title">General Information</h3>
@@ -32,7 +32,7 @@
         <div class="row">
             <div class="form-group form-group-sm col-sm-6">
                 <div class="row">
-                    {!! Form::label('nama_sekolah', 'Name', ['class' => 'col-sm-3 col-form-label']) !!}
+                    {!! Form::label('nama_sekolah', 'Nama Sekolah <span class="text-danger">*</span>', ['class' => 'col-sm-3 col-form-label'], false) !!}
                     <div class="col-sm-9">
                     {!! Form::text('nama_sekolah', null, ['class' => 'form-control']) !!}
                     </div>
@@ -60,7 +60,7 @@
                 <div class="row">
                     <div class="form-group form-group-sm col-sm-6">
                         <div class="row">
-                            {!! Form::label('biaya_pendaftaran', 'Uang Masuk', ['class' => 'col-sm-3 col-form-label']) !!}
+                            {!! Form::label('biaya_pendaftaran', 'Uang Masuk <span class="text-danger">*</span>', ['class' => 'col-sm-3 col-form-label'], false) !!}
                             <div class="col-sm-9">
                             {!! Form::text('biaya_pendaftaran', null, ['class' => 'form-control']) !!}
                             </div>
@@ -68,7 +68,7 @@
                     </div>
                     <div class="form-group form-group-sm col-sm-6">
                         <div class="row">
-                            {!! Form::label('biaya_spp', 'Uang Bulanan', ['class' => 'col-sm-3 col-form-label']) !!}
+                            {!! Form::label('biaya_spp', 'Biaya Bulanan <span class="text-danger">*</span>', ['class' => 'col-sm-3 col-form-label'], false) !!}
                             <div class="col-sm-9">
                             {!! Form::text('biaya_spp', null, ['class' => 'form-control']) !!}
                             </div>
@@ -110,7 +110,7 @@
         <div class="row">
             <div class="form-group form-group-sm col-sm-6">
                 <div class="row">
-                    {!! Form::label('city', 'City', ['class' => 'col-sm-3 col-form-label']) !!}
+                    {!! Form::label('city', 'Kota <span class="text-danger">*</span>', ['class' => 'col-sm-3 col-form-label'], false) !!}
                     <div class="col-sm-9">
                     {!! Form::text('city', (!empty($school) && !empty($school->city))?$school->city->name.', '.$school->city->province->name:null, ['class' => 'form-control', 'autocomplete' => 'autocomplete_off_hack_xfr4!k']) !!}
                     </div>
@@ -119,7 +119,7 @@
 
             <div class="form-group form-group-sm col-sm-6">
                 <div class="row">
-                    {!! Form::label('address', 'Address', ['class' => 'col-sm-3 col-form-label']) !!}
+                    {!! Form::label('address', 'Alamat <span class="text-danger">*</span>', ['class' => 'col-sm-3 col-form-label'], false) !!}
                     <div class="col-sm-9">
                     {!! Form::textarea('address', null, ['class' => 'form-control', 'rows' => 4]) !!}
                     </div>
@@ -183,7 +183,7 @@
                 <div class="row">
                     <div class="form-group form-group-sm col-sm-6">
                         <div class="row">
-                            {!! Form::label('phone1', 'Phone 1', ['class' => 'col-sm-3 col-form-label']) !!}
+                            {!! Form::label('phone1', 'Telpon 1 <span class="text-danger">*</span>', ['class' => 'col-sm-3 col-form-label'], false) !!}
                             <div class="col-sm-9">
                             {!! Form::text('phone1', null, ['class' => 'form-control']) !!}
                             </div>
@@ -192,7 +192,7 @@
 
                     <div class="form-group form-group-sm col-sm-6">
                         <div class="row">
-                            {!! Form::label('phone2', 'Phone 2', ['class' => 'col-sm-3 col-form-label']) !!}
+                            {!! Form::label('phone2', 'Telpon 2', ['class' => 'col-sm-3 col-form-label']) !!}
                             <div class="col-sm-9">
                             {!! Form::text('phone2', null, ['class' => 'form-control']) !!}
                             </div>
@@ -205,7 +205,7 @@
                 <div class="row">
                     <div class="form-group form-group-sm col-sm-6">
                         <div class="row">
-                            {!! Form::label('contact_person', 'Contact Person', ['class' => 'col-sm-3 col-form-label']) !!}
+                            {!! Form::label('contact_person', 'Contact Person <span class="text-danger">*</span>', ['class' => 'col-sm-3 col-form-label'], false) !!}
                             <div class="col-sm-9">
                             {!! Form::text('contact_person', null, ['class' => 'form-control']) !!}
                             </div>
@@ -214,7 +214,7 @@
 
                     <div class="form-group form-group-sm col-sm-6">
                         <div class="row">
-                            {!! Form::label('hp', 'Nomor HP', ['class' => 'col-sm-3 col-form-label']) !!}
+                            {!! Form::label('hp', 'Nomor HP <span class="text-danger">*</span>', ['class' => 'col-sm-3 col-form-label'], false) !!}
                             <div class="col-sm-9">
                             {!! Form::text('hp', null, ['class' => 'form-control']) !!}
                             </div>
