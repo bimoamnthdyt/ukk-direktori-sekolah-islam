@@ -48,7 +48,9 @@ Route::group([
     Route::get('home', function () {
         return redirect('/admin/dashboard');
     });
-
+    Route::get('logout', function () {
+        return abort(404);
+    });
 
     //Route::post('schools\{id}\media', 'SchoolController@storeMedia')->name('schools.media')->where('id', '[0-9]+');Route::post('schools\{id}\media', 'SchoolController@storeMedia')->name('schools.media')->where('id', '[0-9]+');
     Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');

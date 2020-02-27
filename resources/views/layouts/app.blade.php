@@ -227,7 +227,7 @@
             Edit Profil
             </a>
             <div class="dropdown-divider"></div>
-            {!! Form::open(['route' => 'logout', 'id'=>'myform']) !!}
+            {!! Form::open(['method'=>'post', 'route' => 'logout', 'id'=>'myform']) !!}
             <a href="javascript:{}" onclick="document.getElementById('myform').submit();" class="dropdown-item">
                 <i class="fas fa-sign-out-alt"></i> Logout 
             </a>
