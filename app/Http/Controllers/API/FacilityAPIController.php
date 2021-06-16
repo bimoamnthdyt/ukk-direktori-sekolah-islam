@@ -68,10 +68,10 @@ class FacilityAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show()
     {
         /** @var Facility $facility */
-        $facility = $this->facilityRepository->find($id);
+        $facility = $this->facilityRepository->all();
 
         if (empty($facility)) {
             return $this->sendError('Facility not found');
@@ -92,16 +92,12 @@ class FacilityAPIController extends AppBaseController
     public function update($id, UpdateFacilityAPIRequest $request)
     {
         $input = $request->all();
-
         /** @var Facility $facility */
         $facility = $this->facilityRepository->find($id);
-
         if (empty($facility)) {
             return $this->sendError('Facility not found');
         }
-
         $facility = $this->facilityRepository->update($input, $id);
-
         return $this->sendResponse($facility->toArray(), 'Facility updated successfully');
     }
 
@@ -119,13 +115,10 @@ class FacilityAPIController extends AppBaseController
     {
         /** @var Facility $facility */
         $facility = $this->facilityRepository->find($id);
-
         if (empty($facility)) {
             return $this->sendError('Facility not found');
         }
-
         $facility->delete();
-
         return $this->sendResponse($id, 'Facility deleted successfully');
     }
 }

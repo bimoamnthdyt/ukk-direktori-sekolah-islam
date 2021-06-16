@@ -214,10 +214,21 @@ class WebController extends AppBaseController
         
         $school->save();
 
+        $apiToken = "1595239233:AAEXNMdImNppyz_Xl5hb5ShUdtfhc8yyr7Y";
+        $data = [
+            'chat_id' => '721270213',
+            'text' => 'Ada yang Baru Daftar'
+
+        ];
+
+        $response = file_get_contents("https://api.telegram.org/bot$apiToken/sendMessage?" . http_build_query($data) );
+
         Flash::success('Data sekolah berhasil ditambahkan.');
 
-        return redirect(route('web.submit'));
+        return redirect(route('web.submit', 'response'));
+        
     }
+  
 
     public function subscribe() {
         $email = Input::get('email_subscribe');

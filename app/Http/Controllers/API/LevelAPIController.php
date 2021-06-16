@@ -121,6 +121,8 @@ class LevelAPIController extends AppBaseController
         $level = $this->levelRepository->find($id);
 
         if (empty($level)) {
+
+            
             return $this->sendError('Level not found');
         }
 

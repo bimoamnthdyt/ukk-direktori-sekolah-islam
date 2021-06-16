@@ -68,10 +68,10 @@ class SchoolFacilityAPIController extends AppBaseController
      *
      * @return Response
      */
-    public function show($id)
+    public function show()
     {
         /** @var SchoolFacility $schoolFacility */
-        $schoolFacility = $this->schoolFacilityRepository->find($id);
+        $schoolFacility = $this->schoolFacilityRepository->all();
 
         if (empty($schoolFacility)) {
             return $this->sendError('School Facility not found');

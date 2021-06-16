@@ -99,12 +99,12 @@ class ProvinceAPIController extends AppBaseController
         if (empty($province)) {
             return $this->sendError('Province not found');
         }
+        
 
         $province = $this->provinceRepository->update($input, $id);
 
         return $this->sendResponse($province->toArray(), 'Province updated successfully');
     }
-
     /**
      * Remove the specified Province from storage.
      * DELETE /provinces/{id}

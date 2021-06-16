@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreateCityAPIRequest;
 use App\Http\Requests\API\UpdateCityAPIRequest;
 use App\Models\City;
+use App\Models\Province;
 use App\Repositories\CityRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -127,5 +128,11 @@ class CityAPIController extends AppBaseController
         $city->delete();
 
         return $this->sendResponse($id, 'City deleted successfully');
+    }
+
+    public function show_city()
+    {
+        $result = City::with('province')->get();
+        return $this->sendResponse($result, 'city muncul');
     }
 }

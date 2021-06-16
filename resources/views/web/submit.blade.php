@@ -589,6 +589,7 @@
                 }
             });
         });
+
       </script>
     @endsection
 
